@@ -19,7 +19,7 @@ const SideMenu = () => {
 
   return (
     <>
-      <div className="w-1/5 text-white border-r bg-[#121212] h-full">
+      <div className="w-[18%] text-white border-r bg-[#121212] h-full">
         <div className="flex flex-col justify-between h-full">
           <div>
             {UpperMenu.map((item) => (
