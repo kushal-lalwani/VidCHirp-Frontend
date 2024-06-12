@@ -8,7 +8,7 @@ const Search = () => {
       <form onSubmit={handleSubmit((data) =>{
         console.log(data);
       })}>
-        <input {...register("Search")} placeholder="Search Videos" className="w-full px-3 py-2 outline-none border-2 border-slate-700 bg-[#171717]"/>
+        <input {...register("Search")} placeholder="Search Videos" className="w-full px-3 py-2 outline-none border-2 border-slate-700 bg-[#191919]"/>
       </form>
     </div>
   );

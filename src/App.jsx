@@ -1,12 +1,13 @@
-import { useState } from "react";
 import "./App.css";
-import AppLayout from "./Components/Header/AppLayout.jsx";
+import { RouterProvider } from "react-router-dom";
+import {appRouter} from "./Components/AppLayout.jsx";
+
 
 
 const App = () => {
   return (
     <>
-      <AppLayout />
+      <RouterProvider router={appRouter} />
     </>
   );
 };
