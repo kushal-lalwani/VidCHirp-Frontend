@@ -2,6 +2,8 @@ import React from 'react'
 import Navbar from './Header/Navbar';
 import SideMenu from './SideMenu';
 import Channel from './Channel/Channel'
+import NoVideos from './NoVideos'
+import ChannelLayout from './Channel/ChannelLayout';
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 
@@ -25,7 +27,29 @@ export const appRouter = createBrowserRouter([
     children: [
       {
         path: "/channel/:username",
-        element: <Channel/>,
+        element: <ChannelLayout/>,
+        children:[
+          {
+            index:true,
+            element: <NoVideos />
+          },
+          {
+            path: "/channel/:username/videos",
+            element: <NoVideos/> 
+          },
+          {
+            path: "/channel/:username/tweets",
+            element: <NoVideos />
+          },
+          {
+            path: "/channel/:username/playlists",
+            element: <NoVideos />
+          },
+          {
+            path: "/channel/:username/subscribed",
+            element: <NoVideos />
+          }
+        ]
       },
     ],
   },
