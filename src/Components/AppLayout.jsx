@@ -2,9 +2,11 @@ import React from 'react'
 import Navbar from './Header/Navbar';
 import SideMenu from './SideMenu';
 import Channel from './Channel/Channel'
+import EditInfo from './Channel/EditInfo';
 import NoVideos from './NoVideos'
 import ChannelLayout from './Channel/ChannelLayout';
 import { createBrowserRouter, Outlet } from 'react-router-dom';
+import UpdatePassword from './Channel/UpdatePassword';
 
 
 
@@ -29,7 +31,7 @@ export const appRouter = createBrowserRouter([
         path: "/channel/:username",
         element: <ChannelLayout/>,
         children:[
-          {
+          { 
             index:true,
             element: <NoVideos />
           },
@@ -51,8 +53,23 @@ export const appRouter = createBrowserRouter([
           }
         ]
       },
+      {
+        path: '/edit',
+        element: <ChannelLayout edit={true}/>,
+        children:[
+          {
+            path:'personalinfo',
+            element:<EditInfo />
+          },
+          {
+            path: 'password',
+            element: <UpdatePassword />
+          }
+        ]
+      },
     ],
   },
+  
 ]);
 
 export default AppLayout
