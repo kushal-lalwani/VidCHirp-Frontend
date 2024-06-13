@@ -5,13 +5,13 @@ import ChannelNavigate from './ChannelNavigate'
 import { useParams } from "react-router-dom";
 
 
-const ChannelLayout = () => {
+const ChannelLayout = ({edit}) => {
   const { username } = useParams();
 
   return (
     <>
     <Channel/>
-    <ChannelNavigate username={username}/>
+    <ChannelNavigate username={username} edit={edit}/>
     <Outlet />
     </>
     
