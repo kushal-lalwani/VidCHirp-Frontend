@@ -10,6 +10,10 @@ import ChannelLayout from './Channel/ChannelLayout';
 import UpdatePassword from './Channel/UpdatePassword';
 import VideoDetail from './VideoDetail';
 import store from '../store/store';
+import Signup from './Signup';
+import Login from './Login';
+import VideoCard from './VideoCard';
+import VideoMenu from './VideoMenu';
 
 const AppLayout = () => {
   return (
@@ -31,6 +35,14 @@ export const appRouter = createBrowserRouter([
     element: <AppLayout />,
     children: [
       {
+        path:'/',
+        element:<VideoMenu />
+      },
+      {
+        path:'/history',
+        element: <NoVideos/>
+      }
+      ,{
         path: "channel/:username",
         element: <ChannelLayout />,
         children: [
@@ -50,6 +62,12 @@ export const appRouter = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path:"signup", element:<Signup />
+  },
+  {
+    path: "login", element: <Login />
   },
   { path: "videos/:id", element: <VideoDetail /> }
 ]);

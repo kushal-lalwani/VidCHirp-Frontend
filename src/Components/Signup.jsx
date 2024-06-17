@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { FiCamera, FiUploadCloud } from "react-icons/fi";
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser, registerUser } from '../store/Slices/authSlice';
 
 const Signup = () => {
     const {
@@ -10,21 +12,32 @@ const Signup = () => {
         formState: { errors },
     } = useForm();
 
+    const navigate = useNavigate()
     const [avatarPreview, setAvatarPreview] = useState(null);
     const [coverImagePreview, setCoverImagePreview] = useState(null);
 
-    const onSubmit = data => {
+    const dispatch = useDispatch();
+    
+    
+    const onSubmit = async (data) => {
         console.log(data);
+        const registered = await dispatch(registerUser(data)) // returns promise , await necessary , dont listen to VS Code
+        if(registered?.payload?.success){
+            console.log('registered');
+            const loggedIn = await dispatch(loginUser({username,password}))
+            console.log(loggedIn);
+            loggedIn?.type === "login/fulfilled" ? navigate('/') : navigate('/login')
+        }
     };
 
     const handleAvatarChange = (e) => {
-        const file = e.target.files[0];
+        const file = e.target.files[0]; 
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setAvatarPreview(reader.result);
             };
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(file); 
         }
     };
 
@@ -35,7 +48,7 @@ const Signup = () => {
             reader.onloadend = () => {
                 setCoverImagePreview(reader.result);
             };
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(file); 
         }
     };
 
@@ -55,9 +68,9 @@ const Signup = () => {
                             className="hidden"
                             id="coverImage"
                             {...register("coverImage")}
-                            onChange={handleCoverImageChange}
+                            // onChange={handleCoverImageChange}
                         />
-                        <label htmlFor="coverImage" className="absolute inset-0 cursor-pointer"></label>
+                         <label htmlFor="coverImage" className="absolute inset-0 cursor-pointer"></label>
                         <div className='rounded-full border bottom-0 m-3 my-6 absolute w-24 h-24 flex items-center justify-center'>
                             {avatarPreview ? (
                                 <img src={avatarPreview} alt="Avatar Preview" className='rounded-full w-full h-full object-cover' />
@@ -69,13 +82,16 @@ const Signup = () => {
                                 accept="image/*"
                                 className="hidden"
                                 id="avatar"
-                                {...register("avatar")}
-                                onChange={handleAvatarChange}
+                                {...register("avatar", {
+                                    required: "Avatar is required",
+                                })}
+                                // onChange={handleAvatarChange}
                             />
                             <label htmlFor="avatar" className="absolute inset-0 cursor-pointer"></label>
                         </div>
                         <span className='absolute bottom-0 right-0'>Cover Image</span>
                     </div>
+                    {errors.avatar && <p className="text-red-500 ml-3">{errors.avatar.message}</p>}
                     <div className='m-3 flex flex-col'>
                         <label htmlFor="fullname" className='text-lg font-semibold'>Full Name:</label>
                         <input type="text" id='fullname' className='p-1 bg-[#212121]' {...register("fullname", {
