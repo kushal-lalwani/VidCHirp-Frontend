@@ -9,8 +9,7 @@ const initialState = {
         docs:[]
     },
     video: null,
-    loading: false,
-    error: null,
+    loading: true,
 };
 
 export const getVideoById = createAsyncThunk(
@@ -50,7 +49,9 @@ export const getAllVideos = createAsyncThunk("getAllVideos", async ({ query, sor
 const videoSlice = createSlice({
     name: "video",
     initialState,
-    reducers: {},
+    reducers: {
+       
+    },
     extraReducers: (builder) => {
         builder.addCase(getVideoById.pending, (state) => {
             state.loading = true;
@@ -60,11 +61,12 @@ const videoSlice = createSlice({
             state.loading = false;
             state.video = action.payload;
         })
-        builder.addCase(getVideoById.rejected, (state, action) => {
+        builder.addCase(getVideoById.rejected, (state) => {
             state.loading = false;
         });
         builder.addCase(getAllVideos.pending,(state) => {
             state.loading= true
+            state.videos = { docs: [] }; 
         })
         builder.addCase(getAllVideos.fulfilled, (state, action) => {
             state.loading = false;
