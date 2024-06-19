@@ -2,8 +2,7 @@ import React from 'react'
 import { formatUploadedAgo } from '../utils/formatUploadedAgo';
 import { Link } from 'react-router-dom';
 
-const VideoCard = ({_id,title,thumbnail,duration,ownerDetails,createdAt,videoId,views,avatar }) => {
-  console.log(ownerDetails);
+const VideoCard = ({_id,title,thumbnail,duration,ownerDetails,createdAt,views }) => {
   return (
 
     <div className="flex flex-col mx-2 my-2 p-1 w-[31.8%] h-[33%]">
