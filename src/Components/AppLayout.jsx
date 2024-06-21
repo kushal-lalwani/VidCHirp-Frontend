@@ -1,19 +1,19 @@
 import React from 'react';
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Outlet, RouterProvider, useParams } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Navbar from './Header/Navbar';
 import SideMenu from './SideMenu';
-import Channel from './Channel/Channel';
 import EditInfo from './Channel/EditInfo';
-import NoVideos from './NoVideos';
+import NoVideos from './Video/NoVideos';
 import ChannelLayout from './Channel/ChannelLayout';
 import UpdatePassword from './Channel/UpdatePassword';
-import VideoDetail from './VideoDetail';
 import store from '../store/store';
 import Signup from './Signup';
 import Login from './Login';
-import VideoCard from './VideoCard';
-import VideoMenu from './VideoMenu';
+import VideoMenu from './Video/VideoMenu';
+
+import VideoPlayerPage from './Video/VideoPlayerPage';
+import ChannelVideos from './Channel/ChannelVideos';
 
 const AppLayout = () => {
   return (
@@ -35,19 +35,19 @@ export const appRouter = createBrowserRouter([
     element: <AppLayout />,
     children: [
       {
-        path:'/',
-        element:<VideoMenu />
+        path: '/',
+        element: <VideoMenu />
       },
       {
-        path:'/history',
-        element: <NoVideos/>
+        path: '/history',
+        element: <NoVideos />
       }
-      ,{
+      , {
         path: "channel/:username",
         element: <ChannelLayout />,
         children: [
-          { index: true, element: <NoVideos /> },
-          { path: "videos", element: <NoVideos /> },
+          { index: true, element: <ChannelVideos /> },
+          { path: "videos", element: <ChannelVideos /> },
           { path: "tweets", element: <NoVideos /> },
           { path: "playlists", element: <NoVideos /> },
           { path: "subscribed", element: <NoVideos /> }
@@ -64,12 +64,12 @@ export const appRouter = createBrowserRouter([
     ],
   },
   {
-    path:"signup", element:<Signup />
+    path: "signup", element: <Signup />
   },
   {
     path: "login", element: <Login />
   },
-  { path: "videos/:id", element: <VideoDetail /> }
+  { path: "videos/:id", element: <VideoPlayerPage /> }
 ]);
 
 const App = () => {
