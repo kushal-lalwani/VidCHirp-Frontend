@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createBrowserRouter, Outlet, RouterProvider, useParams } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import Navbar from './Header/Navbar';
 import SideMenu from './SideMenu';
 import EditInfo from './Channel/EditInfo';
@@ -14,8 +14,14 @@ import VideoMenu from './Video/VideoMenu';
 
 import VideoPlayerPage from './Video/VideoPlayerPage';
 import ChannelVideos from './Channel/ChannelVideos';
+import LoginPopup from './LoginPopup';
+import ProtectedRoute from './ProtectedRoute';
+import { getCurrentUser } from '../store/Slices/authSlice';
+import UploadVideo from './Video/UploadVideo';
 
 const AppLayout = () => {
+
+  
   return (
     <div className="flex flex-col h-screen">
       <Navbar />
@@ -39,8 +45,16 @@ export const appRouter = createBrowserRouter([
         element: <VideoMenu />
       },
       {
+        path: "edit",
+        element: <ProtectedRoute authentication={true}><ChannelLayout edit={true} /></ProtectedRoute>,
+        children: [
+          { path: "personalinfo", element: <EditInfo /> },
+          { path: "password", element: <UpdatePassword /> }
+        ],
+      },
+      {
         path: '/history',
-        element: <NoVideos />
+        element: <UploadVideo />
       }
       , {
         path: "channel/:username",
@@ -53,14 +67,7 @@ export const appRouter = createBrowserRouter([
           { path: "subscribed", element: <NoVideos /> }
         ],
       },
-      {
-        path: "edit",
-        element: <ChannelLayout edit={true} />,
-        children: [
-          { path: "personalinfo", element: <EditInfo /> },
-          { path: "password", element: <UpdatePassword /> }
-        ],
-      },
+      
     ],
   },
   {
@@ -69,7 +76,7 @@ export const appRouter = createBrowserRouter([
   {
     path: "login", element: <Login />
   },
-  { path: "videos/:id", element: <VideoPlayerPage /> }
+  { path: "videos/:id", element: <ProtectedRoute authentication={true}><VideoPlayerPage /></ProtectedRoute> }
 ]);
 
 const App = () => {

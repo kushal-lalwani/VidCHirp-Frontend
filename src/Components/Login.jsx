@@ -11,15 +11,17 @@ const Login = () => {
     const user = useSelector((state) => state?.auth?.userData)
     const loading = useSelector((state) => state?.auth?.login)
     const navigate = useNavigate()
-
+    
+    
     const onSubmit = async(data) => {
         console.log(data);
         const loggedin = await dispatch(loginUser(data))
         if(loggedin?.payload){
-            console.log(loggedin?.payload);
+
             navigate('/')
         }
     }
+   
 
     return (
         <div className='h-screen w-full bg-[#161616] flex justify-center items-center'>
@@ -44,7 +46,7 @@ const Login = () => {
                         <button type="submit" className='text-xl font-semibold p-3 hover:bg-red-800 bg-[#212121] mt-4'>Submit</button>
                     </div>
                     <p className='m-3'>New to VidChirp?<Link
-                        to={"/login"}
+                        to={"/register"}
                         className="text-red-800 ml-3 cursor-pointer hover:opacity-70"
                     >
                         Register
