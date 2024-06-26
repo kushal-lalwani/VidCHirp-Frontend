@@ -1,6 +1,7 @@
 import React from "react";
 
-const Channel = ({ fullname, username, avatar, subscriberCount, subscribedToCount, isSubscribed, coverImage }) => {
+const Channel = ({ fullname, username, avatar, subscriberCount, subscribedToCount, isSubscribed, coverImage, edit }) => {
+
   return (
     <div className="overflow-x-hidden">
       <div className="flex flex-col w-full h-full">
@@ -20,12 +21,16 @@ const Channel = ({ fullname, username, avatar, subscriberCount, subscribedToCoun
                 <p className="text-xl">{username}</p>
                 <p className="text-sm">{`${subscriberCount} Subscribers • ${subscribedToCount} Subscribed`}</p>
               </div>
-              {isSubscribed ? <button className="right-0 mr-8 absolute border-2 px-6 py-3 bg-red-600 rounded-3xl text-white">Subscribed</button> : <button className="right-0 mr-8 absolute border-2 px-6 py-3 rounded-3xl text-white">Subscribe</button>}
+              {edit
+                ? <button className="right-0 mr-8 absolute border-2 px-6 py-3 bg-red-600 rounded-3xl text-white">Edit</button>
+                : (isSubscribed
+                  ? <button className="right-0 mr-8 absolute border-2 px-6 py-3 bg-red-600 rounded-3xl text-white">Subscribed</button> : <button className="right-0 mr-8 absolute border-2 px-6 py-3 rounded-3xl text-white">Subscribe</button>)}
+
             </div>
           </div>
         </div>
 
-        
+
       </div>
     </div>
   );
